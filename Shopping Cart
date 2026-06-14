@@ -1,11 +1,10 @@
 
-# PROJECT: Shopping Cart
+# PROJECT 9: Shopping Cart
 
 print("Wellcome to you own Shopping cart 🛍️")
 print("=== M E N U === \n➕ ADD ITEM \n👁️ VIEW CART \n✒️MODIFY ITEMS \n⛔ REMOVE ITEMS \n📤 CHECKOUT: ")
 
 shopping_cart = []
-
 
 def view_cart(shopping_cart):
     if not shopping_cart:
@@ -46,8 +45,18 @@ while True:
 
     if option == "1":
         new_item = input("📥 Enter your item to add: ")
-        item_price = float(input("🏷️ Enter your item price: "))
-        quantity = int(input("🛒 Enter your quantity: "))
+
+        try:
+            item_price = float(input("🏷️ Enter your item price: "))
+        except:
+            print("Enter a valid price!")
+            continue
+
+        try:
+            quantity = int(input("🛒 Enter your quantity: "))
+        except:
+            print("Enter a valid quantity!")
+            continue
 
         shopping_cart.append((new_item, item_price, quantity))  #<-- stored as tuples
 
@@ -57,60 +66,84 @@ while True:
         if add_more == "y":
             continue
 
+        else:
+            print("⚠️ Invalid Input!")
+            continue
+
     elif option == "2":
             view_cart(shopping_cart)
 
     elif option == "3":
-        if not shopping_cart:
-            print("Nothing to Modify!")
 
-        for index, item in enumerate(shopping_cart, start=1):
-            print(f"📌 {index}. {item} ")
+        while True:
+            if not shopping_cart:
+                print("Nothing to Modify!")
+                break
 
-        try:
-             modify_item = int(input("📝 Enter the item number to modify: "))
+            for index, item in enumerate(shopping_cart, start=1):
+                print(f"📌 {index}. {item} ")
 
-        except:
-            print("🔢 Please enter a number!")
-            continue
+            try:
+                modify_item = int(input("📝 Enter the item number to modify: "))
 
-        valid_item = 1 <= modify_item <= len(shopping_cart)
+            except:
+                print("🔢 Please enter a number!")
+                continue
 
-        if valid_item:
+            valid_item = 1 <= modify_item <= len(shopping_cart)
 
-            selected_item = shopping_cart[modify_item - 1]
+            if valid_item:
 
-            name, price, quantity = selected_item
+                selected_item = shopping_cart[modify_item - 1]
 
-            print(f"1. Name: {name}\n2. Price: {price}\n3. Quantity: {quantity}")
+                name, price, quantity = selected_item
 
-            modify_choice = input("✒️ Enter your choice: ")
+                print(f"1. Name: {name}\n2. Price: {price}\n3. Quantity: {quantity}")
 
-            if modify_choice == "1":
-                new_modified_item = input("📥 Enter the new item: ")
+                modify_choice = input("✒️ Enter your choice from 1 to 3: ")
 
-                new_item = new_modified_item
-                print("Item modified successfully! ✅")
+                if modify_choice == "1":
+                    new_modified_item = input("📥 Enter the new item: ")
+                    name = new_modified_item
+                    print("Item modified successfully! ✅")
 
-            elif modify_choice == "2":
-                new_price = (input("🏷️ Enter the new item price: "))
+                elif modify_choice == "2":
+                    try:
+                        new_price = float(input("🏷️ Enter the new item price: "))
+                        price = new_price
+                        print("Item price modified successfully! ✅")
 
-                price = float(new_price)
-                print("Item price modified successfully! ✅")
+                    except:
+                        print("🔢 Enter the valid number!")
+                        continue
 
-            elif modify_choice == "3":
-                new_quantity = input("🛒 Enter the new quantity: ")
+                elif modify_choice == "3":
+                    try:
+                        new_quantity = int(input("🛒 Enter the new quantity: "))
+                        quantity = new_quantity
+                        print("Item quantity modified successfully! ✅")
+                    except:
+                        print("🔢 Enter the valid number!")
+                        continue
 
-                quantity = int(new_quantity)
-                print("Item quantity modified successfully! ✅")
+                else:
+                    print("⚠️ Invalid input!")
+                    continue
+
+                shopping_cart[modify_item - 1] = (name, price, quantity)
+
+                modify_again = input("📝 Do you want to modify anything else? Yes(y)/ No(n): ")
+
+                if modify_again == "y":
+                    continue
+
+                elif modify_again == "n":
+                    break
+                else:
+                    print("⚠️ Enter y or n!")
 
             else:
-                print("⚠️ Invalid choice!")
-
-            shopping_cart[modify_item - 1] = (name, price, quantity)
-
-        else:
-            print("⚠️ Invalid input!")
+                print("⚠️ Invalid item number!")
 
     elif option == "4":
         while True:
@@ -141,6 +174,8 @@ while True:
 
                 elif delete_more == "n":
                     break
+                else:
+                    print("⚠️ Enter y or n!")
 
             else:
                 print("⚠️ Invalid input.")
