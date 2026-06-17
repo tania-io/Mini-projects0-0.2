@@ -1,5 +1,5 @@
 
-# PROJECT 9: Shopping Cart
+# PROJECT 5: Shopping Cart
 
 print("Wellcome to you own Shopping cart 🛍️")
 print("=== M E N U === \n➕ ADD ITEM \n👁️ VIEW CART \n✒️MODIFY ITEMS \n⛔ REMOVE ITEMS \n📤 CHECKOUT: ")
